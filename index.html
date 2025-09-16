@@ -283,7 +283,7 @@
     <section id="play">
         <h2>Играть</h2>
         <p>Hotline Mayami — кастомный мод, который легко установить! Скачай архив, распакуй его на рабочий стол и запусти .exe файл.</p>
-        <p><a href="#download" class="game-link">Скачать мод</a></p>
+        <p><a href="#download" class="game-link" id="download-link">Скачать мод</a></p>
     </section>
     
     <section id="features">
@@ -326,7 +326,7 @@
         </div>
         <div class="faq-item">
             <h3>Как скачать и установить?</h3>
-            <p>Скачай архив с <a href="https://www.mediafire.com/file/nqgkvh7ji30nl23/nightmarecraft.zip/file" class="download-link" target="_blank">MediaFire</a> (введи пароль: 1337) или запроси zip-архив через TG-бота <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a>. Распакуй архив на рабочий стол, найди .exe файл и запусти его. Убедись, что у тебя установлен Roblox Player, чтобы всё работало как надо.</p>
+            <p>Скачай архив с <a href="https://www.mediafire.com/file/hdocoknwvjrytp7/hotlinemaymi.zip/file" class="download-link" target="_blank">MediaFire</a> (введи пароль: 1337) или запроси zip-архив через TG-бота <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a>. Распакуй архив на рабочий стол, найди .exe файл и запусти его. Убедись, что у тебя установлен Roblox Player, чтобы всё работало как надо.</p>
         </div>
         <div class="faq-item">
             <h3>Работает ли мод на Roblox?</h3>
@@ -379,6 +379,12 @@
             });
         });
 
+        document.querySelector('#download-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             let currentSection = '';
@@ -399,5 +405,4 @@
         });
     </script>
 </body>
-
 </html>
