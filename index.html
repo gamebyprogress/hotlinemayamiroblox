@@ -36,8 +36,50 @@
                 transparent 2px
             );
             opacity: 0.3;
-            z-index: -1;
+            z-index: -2;
             animation: crt-scan 3s linear infinite;
+        }
+        .neon-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(217, 70, 139, 0.15) 40%,
+                rgba(0, 184, 212, 0.15) 60%,
+                transparent 70%
+            );
+            background-size: 200% 200%;
+            opacity: 0.2;
+            z-index: -1;
+            animation: neon-glow 12s linear infinite;
+        }
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .preloader-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2em;
+            color: #d9468b;
+            text-shadow: 0 0 10px #d9468b, 0 0 20px #00b8d4;
+            animation: neon-flicker 1.5s infinite alternate;
         }
         header {
             text-align: center;
@@ -84,7 +126,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            gap: 10px;
+            gap: 15px;
         }
         nav a {
             display: inline-block;
@@ -101,6 +143,7 @@
         nav a:hover {
             border-color: #d9468b;
             color: #d9468b;
+            padding: 8px 22px;
             transform: scale(1.1);
             box-shadow: 0 0 8px #d9468b;
         }
@@ -118,6 +161,30 @@
             height: 100%;
             background: radial-gradient(circle, rgba(217, 70, 139, 0.2) 0%, transparent 70%);
             z-index: -1;
+        }
+        .hamburger {
+            display: none;
+            font-size: 1.5em;
+            color: #d9468b;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-menu.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            background: #121212;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            animation: slide-in 0.3s ease;
+            gap: 12px;
         }
         section {
             max-width: 900px;
@@ -175,19 +242,157 @@
             background: radial-gradient(circle, rgba(217, 70, 139, 0.2) 0%, transparent 70%);
             z-index: -1;
         }
-        .features {
-            list-style: none;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             padding: 0;
         }
-        .features li {
-            margin: 15px 0;
+        .feature-card {
+            background: #303030;
+            border: 2px solid #d9468b;
+            border-radius: 8px;
             padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #d9468b;
+        }
+        .feature-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .feature-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.1em;
+            color: #d9468b;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 18px;
+            border: 1px solid #d9468b;
+            text-align: left;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9em;
+        }
+        .leaderboard-table th {
+            background: #303030;
+            color: #d9468b;
+        }
+        .leaderboard-table td {
+            background: #242424;
+        }
+        .leaderboard-table a {
+            color: #00b8d4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .leaderboard-table a:hover {
+            color: #d9468b;
+            text-shadow: 0 0 5px #d9468b;
+        }
+        .challenges {
+            padding: 0;
+            margin-top: 20px;
+        }
+        .challenge-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            color: #d9468b;
+            text-shadow: 1px 1px 2px #000;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .challenges-title {
+            margin-top: 40px;
+        }
+        .online-status {
+            margin-top: 20px;
+            padding: 10px;
             background: #303030;
             border-radius: 8px;
-            transition: background 0.3s ease;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
+            color: #00b8d4;
         }
-        .features li:hover {
-            background: #3a3a3a;
+        .online-status.glitch {
+            animation: glitch 0.3s ease;
+        }
+        .community-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .community-tab {
+            padding: 8px 15px;
+            background: transparent;
+            border: 2px solid #d9468b;
+            color: #d9468b;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .community-tab.active {
+            background: #d9468b;
+            color: #1a1a1a;
+            box-shadow: 0 0 10px #d9468b;
+        }
+        .community-tab:hover {
+            background: #d9468b;
+            color: #1a1a1a;
+        }
+        .community-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .community-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .social-button {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: transparent;
+            border: 2px solid #d9468b;
+            color: #d9468b;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .social-button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        .social-button:hover {
+            background: #d9468b;
+            color: #1a1a1a;
+            box-shadow: 0 0 10px #d9468b;
+        }
+        .community-action {
+            margin-top: 20px;
         }
         .download-link {
             color: #00b8d4;
@@ -199,13 +404,17 @@
         }
         .news-item {
             margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+            width: 100%;
         }
         .news-date {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #d9468b;
             text-shadow: 1px 1px 2px #000;
             margin-right: 10px;
+            white-space: nowrap;
         }
         .faq-item {
             margin-bottom: 10px;
@@ -242,6 +451,51 @@
             background: #121212;
             color: #b0b0b0;
         }
+        @media (max-width: 768px) {
+            body {
+                font-size: 1em;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            section {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            nav {
+                justify-content: space-between;
+                padding: 5px;
+            }
+            .hamburger {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .community-tabs {
+                flex-direction: column;
+            }
+            .leaderboard-table th, .leaderboard-table td {
+                font-size: 0.8em;
+                padding: 12px;
+            }
+            .news-item, .challenges .news-item {
+                display: block;
+            }
+            .news-date, .challenge-name {
+                display: inline-block;
+                margin-bottom: 5px;
+            }
+        }
         @keyframes neon-flicker {
             0% { text-shadow: 1px 1px 2px #000, 0 0 5px #d9468b; }
             100% { text-shadow: 1px 1px 2px #000, 0 0 8px #d9468b; }
@@ -251,26 +505,57 @@
             50% { box-shadow: 0 0 8px #d9468b; }
             100% { box-shadow: 0 0 5px #d9468b; }
         }
+        @keyframes neon-glow {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
         @keyframes crt-scan {
             0% { background-position: 0 0; }
             100% { background-position: 0 4px; }
         }
+        @keyframes slide-in {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 0); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
+        }
     </style>
 </head>
 <body>
+    <div class="neon-lines"></div>
+    <div class="preloader" id="preloader">
+        <div class="preloader-text">Loading...</div>
+    </div>
     <header>
         <h1>Hotline Mayami</h1>
         <p class="tagline">Ты любишь причинять боль?</p>
     </header>
     
     <nav>
-        <a href="#home" aria-current="page">Главная</a>
-        <a href="#play">Играть</a>
-        <a href="#features">Ключевые особенности</a>
-        <a href="#news">Новости</a>
-        <a href="#community">Сообщество</a>
-        <a href="#download">Скачать</a>
-        <a href="#faq">FAQ</a>
+        <div class="hamburger" id="hamburger">☰</div>
+        <div class="nav-menu" id="nav-menu">
+            <a href="#home" aria-current="page">Главная</a>
+            <a href="#play">Играть</a>
+            <a href="#features">Ключевые особенности</a>
+            <a href="#news">Новости</a>
+            <a href="#leaderboard">Лидерборд</a>
+            <a href="#community">Сообщество</a>
+            <a href="#download">Скачать</a>
+            <a href="#faq">FAQ</a>
+        </div>
     </nav>
     
     <section id="home">
@@ -288,27 +573,125 @@
     
     <section id="features">
         <h2>Ключевые особенности</h2>
-        <ul class="features">
-            <li>Надень маску тигра для скорости или медведя для сокрушительного урона.</li>
-            <li>Комбинируй удары, броски оружия и экзекуции для максимального счёта.</li>
-            <li>Пробирайся через клубы, отели и улицы, полные боссов и секретов.</li>
-            <li>Пройди миссии без смертей для A-rank и покажи, кто здесь босс.</li>
-            <li>Меняй скины и саундтрек, чтобы устроить настоящий неоновый хаос.</li>
-        </ul>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="https://img.icons8.com/?size=100&id=lm7emUJqrpOM&format=png&color=000000" alt="Mask Icon">
+                <h3>Маски</h3>
+                <p>Надень маску тигра для скорости или медведя для сокрушительного урона.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/lightning-bolt.png" alt="Combo Icon">
+                <h3>Комбо-атаки</h3>
+                <p>Комбинируй удары, броски оружия и экзекуции для максимального счёта.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/marker.png" alt="Location Icon">
+                <h3>Локации</h3>
+                <p>Пробирайся через клубы, отели и улицы, полные боссов и секретов.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/star.png" alt="Rank Icon">
+                <h3>A-Rank</h3>
+                <p>Пройди миссии без смертей для A-rank и покажи, кто здесь босс.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://img.icons8.com/ios-filled/50/000000/paint-palette.png" alt="Skin Icon">
+                <h3>Кастом</h3>
+                <p>Меняй скины и саундтрек, чтобы устроить настоящий неоновый хаос.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://img.icons8.com/?size=100&id=98957&format=png&color=000000" alt="Multiplayer Icon">
+                <h3>Мультиплеер</h3>
+                <p>Играй с друзьями в кооперативе и соревнуйся за лучший счёт!</p>
+            </div>
+        </div>
     </section>
     
     <section id="news">
         <h2>Новости</h2>
-        <p class="news-item"><span class="news-date">16.09.2025:</span> Новый уровень "Neon Nightmare" с улучшенной AI врагов. Исправлены баги с бросками оружия.</p>
-        <p class="news-item"><span class="news-date">10.09.2025:</span> Добавлены маски: Tiger (скорость), Bear (урон), Owl (обзор). Тестируем мультиплеер.</p>
-        <p class="news-item"><span class="news-date">05.09.2025:</span> Обновлён саундтрек: 5 новых треков в стиле 80-х. Оптимизация для мобильных устройств.</p>
-        <p class="news-item"><span class="news-date">01.09.2025:</span> Релиз версии 1.1: 7 уровней, 12 масок, поддержка геймпадов.</p>
-        <p class="news-item"><span class="news-date">25.08.2025:</span> Запущены челленджи с наградами в Robux для топ-игроков в бета-тесте.</p>
+        <p class="news-item"><span class="news-date">10.09.2025:</span> Новый уровень "Neon Nightmare" с улучшенной AI врагов. Исправлены баги с бросками оружия.</p>
+        <p class="news-item"><span class="news-date">01.07.2025:</span> Добавлены маски: Tiger (скорость), Bear (урон), Owl (обзор). Тестируем мультиплеер.</p>
+        <p class="news-item"><span class="news-date">15.05.2025:</span> Обновлён саундтрек: 5 новых треков в стиле 80-х. Оптимизация для мобильных устройств.</p>
+        <p class="news-item"><span class="news-date">20.03.2025:</span> Релиз версии 1.1: 7 уровней, 12 масок, поддержка геймпадов.</p>
+        <p class="news-item"><span class="news-date">01.03.2025:</span> Запущены челленджи с наградами в Robux для топ-игроков в бета-тесте.</p>
+    </section>
+    
+    <section id="leaderboard">
+        <h2>Лидерборд</h2>
+        <table class="leaderboard-table">
+            <tr>
+                <th>Место</th>
+                <th>Ник</th>
+                <th>Очки</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><a href="https://hotlinemayami.com/profile/NeonViper_X" target="_blank">NeonViper_X</a></td>
+                <td>148,732</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><a href="https://hotlinemayami.com/profile/BloodWolf99" target="_blank">BloodWolf99</a></td>
+                <td>127,419</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><a href="https://hotlinemayami.com/profile/MiamiPhantom" target="_blank">MiamiPhantom</a></td>
+                <td>103,287</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><a href="https://hotlinemayami.com/profile/RetroKiller420" target="_blank">RetroKiller420</a></td>
+                <td>89,654</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><a href="https://hotlinemayami.com/profile/GlitchRaptor" target="_blank">GlitchRaptor</a></td>
+                <td>76,912</td>
+            </tr>
+        </table>
+        <h2 class="challenges-title">Челленджи</h2>
+        <div class="challenges">
+            <p class="news-item"><span class="challenge-name">Neon Nightmare:</span> Пройди уровень "Neon Nightmare" без смертей — награда: 500 Robux.</p>
+            <p class="news-item"><span class="challenge-name">Combo Master:</span> Собери 10,000 комбо-очков за миссию — награда: Маска.</p>
+            <p class="news-item"><span class="challenge-name">Club Chaos:</span> Убей 50 врагов на уровне "Club Chaos" — награда: 200 Robux.</p>
+        </div>
+        <div class="online-status" id="online-status">
+            Текущий онлайн: ~<span id="online-count">0</span> игроков на сервере
+        </div>
     </section>
     
     <section id="community">
         <h2>Сообщество</h2>
-        <p>Выбери свою маску и присоединяйся к хаосу: <a href="https://discord.gg/hotlinemayami" class="download-link" target="_blank">Discord Hotline Mayami</a>, X — @HotlineMayamiRoblox. Делись геймплеем и идеями!</p>
+        <p>Стань частью неонового хаоса!</p>
+        <div class="community-tabs">
+            <button class="community-tab active" data-tab="discord">Discord</button>
+            <button class="community-tab" data-tab="x">X</button>
+            <button class="community-tab" data-tab="telegram">Telegram</button>
+        </div>
+        <div class="community-content active" id="discord">
+            <p>Присоединяйся к нашему Discord: <a href="https://discord.gg/hotlinemayami" class="download-link" target="_blank">Discord Hotline Mayami</a>. Делись геймплеем, обсуждай стратегии и получай эксклюзивные обновления!</p>
+        </div>
+        <div class="community-content" id="x">
+            <p>Следи за нами на X: <a href="https://x.com/HotlineMayamiRoblox" class="download-link" target="_blank">@HotlineMayamiRoblox</a>. Новости, мемы и челленджи!</p>
+        </div>
+        <div class="community-content" id="telegram">
+            <p>Подпишись на наш Telegram: <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a>. Получай моды, обновления и эксклюзивы!</p>
+        </div>
+        <div class="social-buttons">
+            <a href="https://x.com/intent/tweet?text=Я%20наёмник%20в%20Hotline%20Mayami!%20Присоединяйся%20к%20неоновому%20хаосу!%20%40HotlineMayamiRoblox" class="social-button" target="_blank">
+                <img src="https://img.icons8.com/ios-filled/50/000000/twitter.png" alt="X Icon"> X
+            </a>
+            <a href="https://discord.gg/hotlinemayami" class="social-button" target="_blank">
+                <img src="https://img.icons8.com/ios-filled/50/000000/discord.png" alt="Discord Icon"> Discord
+            </a>
+            <a href="https://t.me/share/url?url=https://hotlinemayami.com&text=Я%20наёмник%20в%20Hotline%20Mayami!%20Присоединяйся%20к%20неоновому%20хаосу!" class="social-button" target="_blank">
+                <img src="https://img.icons8.com/ios-filled/50/000000/telegram-app.png" alt="Telegram Icon"> Telegram
+            </a>
+        </div>
+        <div class="community-action">
+            <a href="#download" class="game-link">Присоединяйся к хаосу!</a>
+        </div>
     </section>
     
     <section id="download">
@@ -355,6 +738,19 @@
     </footer>
     
     <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Hamburger Menu
+        document.getElementById('hamburger').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+
+        // Navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -363,9 +759,20 @@
                 this.setAttribute('aria-current', 'page');
                 const target = document.querySelector(this.getAttribute('href'));
                 target.scrollIntoView({ behavior: 'smooth' });
+                if (window.innerWidth <= 768) {
+                    document.getElementById('nav-menu').classList.remove('active');
+                }
             });
         });
 
+        // Download Link
+        document.querySelector('#download-link').addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // FAQ Accordion
         document.querySelectorAll('.faq-item h3').forEach(header => {
             header.addEventListener('click', function () {
                 const faqItem = this.parentElement;
@@ -379,12 +786,17 @@
             });
         });
 
-        document.querySelector('#download-link').addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            target.scrollIntoView({ behavior: 'smooth' });
+        // Community Tabs
+        document.querySelectorAll('.community-tab').forEach(tab => {
+            tab.addEventListener('click', function () {
+                document.querySelectorAll('.community-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.community-content').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
         });
 
+        // Scroll Active Section
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             let currentSection = '';
@@ -403,6 +815,48 @@
                 }
             });
         });
+
+        // Online Counter
+        const onlineCountElement = document.getElementById('online-count');
+        const onlineStatusElement = document.getElementById('online-status');
+        let hasAnimated = false;
+
+        function animateCounter(target) {
+            let start = 0;
+            const duration = 2000;
+            const stepTime = 20;
+            const step = target / (duration / stepTime);
+
+            const counter = setInterval(() => {
+                start += step;
+                if (start >= target) {
+                    start = target;
+                    clearInterval(counter);
+                }
+                onlineCountElement.textContent = Math.floor(start);
+            }, stepTime);
+        }
+
+        function fluctuateOnline() {
+            const base = 2345;
+            const fluctuation = Math.floor(Math.random() * 21) - 10; // ±2, ±3, ±10
+            const newCount = base + fluctuation;
+            onlineCountElement.textContent = newCount;
+            onlineStatusElement.classList.add('glitch');
+            setTimeout(() => {
+                onlineStatusElement.classList.remove('glitch');
+            }, 300);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !hasAnimated) {
+                animateCounter(2345);
+                hasAnimated = true;
+                setInterval(fluctuateOnline, Math.random() * 5000 + 5000); // 5-10 seconds
+            }
+        }, { threshold: 0.5 });
+
+        observer.observe(onlineStatusElement);
     </script>
 </body>
 </html>
