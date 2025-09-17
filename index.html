@@ -16,7 +16,7 @@
             font-family: 'VT323', monospace;
             color: #e0e0e0;
             background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-            font-size: 1.2em;
+            font-size: clamp(16px, 2.5vw, 18px);
             line-height: 1.4;
             overflow-x: hidden;
             position: relative;
@@ -76,14 +76,14 @@
         }
         .preloader-text {
             font-family: 'Press Start 2P', cursive;
-            font-size: 2em;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             color: #d9468b;
             text-shadow: 0 0 10px #d9468b, 0 0 20px #00b8d4;
             animation: neon-flicker 1.5s infinite alternate;
         }
         header {
             text-align: center;
-            padding: 40px 20px;
+            padding: clamp(20px, 5vw, 40px) 20px;
             background: #121212;
             position: relative;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -101,7 +101,7 @@
         }
         h1 {
             font-family: 'Press Start 2P', cursive;
-            font-size: 2.8em;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             color: #d9468b;
             text-shadow: 1px 1px 2px #000, 0 0 5px #d9468b;
             position: relative;
@@ -110,7 +110,7 @@
         }
         p.tagline {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9em;
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
             color: #ff4040;
             text-shadow: 1px 1px 2px #000;
             margin-top: 20px;
@@ -120,21 +120,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 8px;
+            padding: clamp(5px, 2vw, 8px);
             background: #121212;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             position: sticky;
             top: 0;
             z-index: 100;
-            gap: 15px;
+            gap: clamp(10px, 2vw, 15px);
         }
         nav a {
             display: inline-block;
             color: #e0e0e0;
             text-decoration: none;
-            padding: 7px 18px;
+            padding: clamp(5px, 1.5vw, 7px) clamp(12px, 3vw, 18px);
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.85em;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
             border: 2px solid transparent;
             border-radius: 4px;
             transition: all 0.3s ease;
@@ -143,7 +143,7 @@
         nav a:hover {
             border-color: #d9468b;
             color: #d9468b;
-            padding: 8px 22px;
+            padding: clamp(6px, 1.5vw, 8px) clamp(15px, 3vw, 22px);
             transform: scale(1.1);
             box-shadow: 0 0 8px #d9468b;
         }
@@ -164,14 +164,14 @@
         }
         .hamburger {
             display: none;
-            font-size: 1.5em;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             color: #d9468b;
             cursor: pointer;
             padding: 10px;
         }
         .nav-menu {
             display: flex;
-            gap: 15px;
+            gap: clamp(10px, 2vw, 15px);
         }
         .nav-menu.active {
             display: flex;
@@ -187,9 +187,9 @@
             gap: 12px;
         }
         section {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 25px;
+            max-width: min(90%, 900px);
+            margin: clamp(20px, 5vw, 40px) auto;
+            padding: clamp(15px, 3vw, 25px);
             background: #242424;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -202,7 +202,7 @@
         }
         h2 {
             font-family: 'Press Start 2P', cursive;
-            font-size: 1.8em;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
             color: #d9468b;
             margin-bottom: 20px;
             text-shadow: 1px 1px 2px #000;
@@ -215,11 +215,11 @@
             background: transparent;
             border: 2px solid #d9468b;
             color: #d9468b;
-            padding: 10px 20px;
+            padding: clamp(8px, 2vw, 10px) clamp(15px, 3vw, 20px);
             border-radius: 4px;
             text-decoration: none;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9em;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
             text-transform: uppercase;
             transition: all 0.3s ease;
             box-shadow: 0 0 5px #d9468b;
@@ -244,15 +244,15 @@
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(10px, 2vw, 20px);
             padding: 0;
         }
         .feature-card {
             background: #303030;
             border: 2px solid #d9468b;
             border-radius: 8px;
-            padding: 15px;
+            padding: clamp(10px, 2vw, 15px);
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -261,13 +261,13 @@
             box-shadow: 0 0 15px #d9468b;
         }
         .feature-card img {
-            width: 60px;
-            height: 60px;
+            width: clamp(40px, 8vw, 60px);
+            height: clamp(40px, 8vw, 60px);
             margin-bottom: 10px;
         }
         .feature-card h3 {
             font-family: 'Press Start 2P', cursive;
-            font-size: 1.1em;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             color: #d9468b;
             margin-bottom: 10px;
             text-shadow: 1px 1px 2px #000;
@@ -275,15 +275,14 @@
         .leaderboard-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            margin-bottom: 40px;
+            margin: 20px 0;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
         }
         .leaderboard-table th, .leaderboard-table td {
-            padding: 18px;
+            padding: clamp(10px, 2vw, 18px);
             border: 1px solid #d9468b;
             text-align: left;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9em;
         }
         .leaderboard-table th {
             background: #303030;
@@ -307,7 +306,7 @@
         }
         .challenge-name {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.75em;
+            font-size: clamp(0.65rem, 2vw, 0.75rem);
             color: #d9468b;
             text-shadow: 1px 1px 2px #000;
             margin-right: 10px;
@@ -318,12 +317,12 @@
         }
         .online-status {
             margin-top: 20px;
-            padding: 10px;
+            padding: clamp(8px, 2vw, 10px);
             background: #303030;
             border-radius: 8px;
             text-align: center;
             font-family: 'Press Start 2P', cursive;
-            font-size: 1em;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
             color: #00b8d4;
         }
         .online-status.glitch {
@@ -333,14 +332,15 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         .community-tab {
-            padding: 8px 15px;
+            padding: clamp(6px, 2vw, 8px) clamp(10px, 2vw, 15px);
             background: transparent;
             border: 2px solid #d9468b;
             color: #d9468b;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9em;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -367,23 +367,24 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
         .social-button {
             display: flex;
             align-items: center;
-            padding: 6px 12px;
+            padding: clamp(5px, 1.5vw, 6px) clamp(8px, 2vw, 12px);
             background: transparent;
             border: 2px solid #d9468b;
             color: #d9468b;
             text-decoration: none;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.75em;
+            font-size: clamp(0.65rem, 2vw, 0.75rem);
             border-radius: 4px;
             transition: all 0.3s ease;
         }
         .social-button img {
-            width: 20px;
-            height: 20px;
+            width: clamp(16px, 4vw, 20px);
+            height: clamp(16px, 4vw, 20px);
             margin-right: 8px;
         }
         .social-button:hover {
@@ -407,10 +408,11 @@
             display: inline-flex;
             align-items: center;
             width: 100%;
+            flex-wrap: wrap;
         }
         .news-date {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.75em;
+            font-size: clamp(0.65rem, 2vw, 0.75rem);
             color: #d9468b;
             text-shadow: 1px 1px 2px #000;
             margin-right: 10px;
@@ -424,7 +426,7 @@
         }
         .faq-item h3 {
             font-family: 'Press Start 2P', cursive;
-            font-size: 1.2em;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
             color: #d9468b;
             padding: 15px;
             margin: 0;
@@ -447,27 +449,18 @@
         }
         footer {
             text-align: center;
-            padding: 20px;
+            padding: clamp(15px, 3vw, 20px);
             background: #121212;
             color: #b0b0b0;
+            font-size: clamp(0.8rem, 2vw, 1rem);
         }
-        @media (max-width: 768px) {
-            body {
-                font-size: 1em;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            h2 {
-                font-size: 1.5em;
-            }
-            section {
-                padding: 15px;
-                margin: 20px auto;
+        /* Медиа-запросы для адаптивности */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             }
             nav {
                 justify-content: space-between;
-                padding: 5px;
             }
             .hamburger {
                 display: block;
@@ -478,15 +471,35 @@
             .nav-menu.active {
                 display: flex;
             }
+        }
+        @media (max-width: 768px) {
+            body {
+                font-size: clamp(14px, 2.5vw, 16px);
+            }
+            h1 {
+                font-size: clamp(1.5rem, 5vw, 2rem);
+            }
+            h2 {
+                font-size: clamp(1.2rem, 4vw, 1.5rem);
+            }
+            section {
+                padding: clamp(10px, 2vw, 15px);
+                margin: clamp(15px, 3vw, 20px) auto;
+            }
             .features-grid {
                 grid-template-columns: 1fr;
             }
             .community-tabs {
                 flex-direction: column;
             }
+            .leaderboard-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
             .leaderboard-table th, .leaderboard-table td {
-                font-size: 0.8em;
-                padding: 12px;
+                font-size: clamp(0.65rem, 2vw, 0.8rem);
+                padding: clamp(8px, 2vw, 12px);
             }
             .news-item, .challenges .news-item {
                 display: block;
@@ -494,6 +507,22 @@
             .news-date, .challenge-name {
                 display: inline-block;
                 margin-bottom: 5px;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                font-size: clamp(12px, 2.5vw, 14px);
+            }
+            h1 {
+                font-size: clamp(1.2rem, 4vw, 1.8rem);
+            }
+            .feature-card img {
+                width: clamp(30px, 6vw, 40px);
+                height: clamp(30px, 6vw, 40px);
+            }
+            .game-link, .community-tab, .social-button {
+                font-size: clamp(0.6rem, 2vw, 0.8rem);
+                padding: clamp(5px, 1.5vw, 8px) clamp(10px, 2vw, 15px);
             }
         }
         @keyframes neon-flicker {
@@ -506,15 +535,9 @@
             100% { box-shadow: 0 0 5px #d9468b; }
         }
         @keyframes neon-glow {
-            0% {
-                background-position: 0% 0%;
-            }
-            50% {
-                background-position: 100% 100%;
-            }
-            100% {
-                background-position: 0% 0%;
-            }
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
         @keyframes crt-scan {
             0% { background-position: 0 0; }
@@ -676,7 +699,7 @@
             <p>Следи за нами на X: <a href="https://x.com/HotlineMayamiRoblox" class="download-link" target="_blank">@HotlineMayamiRoblox</a>. Новости, мемы и челленджи!</p>
         </div>
         <div class="community-content" id="telegram">
-            <p>Подпишись на наш Telegram: <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a>. Получай моды, обновления и эксклюзивы!</p>
+            <p>Подпишись на наш Telegram: <a href="https://t.me/GameExtensions_bot" class="download-link" target="_blank">@GameExtensions_bot</a>. Получай моды, обновления и эксклюзивы!</p>
         </div>
         <div class="social-buttons">
             <a href="https://x.com/intent/tweet?text=Я%20наёмник%20в%20Hotline%20Mayami!%20Присоединяйся%20к%20неоновому%20хаосу!%20%40HotlineMayamiRoblox" class="social-button" target="_blank">
@@ -697,8 +720,8 @@
     <section id="download">
         <h2>Скачать</h2>
         <p>Скачай мод: <a href="https://www.mediafire.com/file/hdocoknwvjrytp7/hotlinemaymi.zip/file" class="download-link" target="_blank">MediaFire</a> (пароль: 1337).</p>
-        <p>Или через TG-бота: <a href="https://t.me/robloxextentions_bot" class="download-link" target="_blank">@robloxextentions_bot</a> — запроси zip-архив.</p>
-        <p>В нашем Telegram-боте (@robloxextentions_bot) вы найдёте больше кастомных сборок, обновлений и эксклюзивных модов. Не пропустите!</p>
+        <p>Или через TG-бота: <a href="https://t.me/GameExtensions_bot" class="download-link" target="_blank">@GameExtensions_bot</a> — запроси zip-архив.</p>
+        <p>В нашем Telegram-боте (@GameExtensions_bot) вы найдёте больше кастомных сборок, обновлений и эксклюзивных модов. Не пропустите!</p>
     </section>
     
     <section id="faq">
@@ -709,7 +732,7 @@
         </div>
         <div class="faq-item">
             <h3>Как скачать и установить?</h3>
-            <p>Скачай архив с <a href="https://www.mediafire.com/file/hdocoknwvjrytp7/hotlinemaymi.zip/file" class="download-link" target="_blank">MediaFire</a> (введи пароль: 1337) или запроси zip-архив через TG-бота <a href="https://t.me/GameExtensions_bot" class="download-link" target="_blank">@robloxextentions_bot</a>. Распакуй архив на рабочий стол, найди .exe файл и запусти его. Убедись, что у тебя установлен Roblox Player, чтобы всё работало как надо.</p>
+            <p>Скачай архив с <a href="https://www.mediafire.com/file/hdocoknwvjrytp7/hotlinemaymi.zip/file" class="download-link" target="_blank">MediaFire</a> (введи пароль: 1337) или запроси zip-архив через TG-бота <a href="https://t.me/GameExtensions_bot" class="download-link" target="_blank">@GameExtensions_bot</a>. Распакуй архив на рабочий стол, найди .exe файл и запусти его. Убедись, что у тебя установлен Roblox Player, чтобы всё работало как надо.</p>
         </div>
         <div class="faq-item">
             <h3>Работает ли мод на Roblox?</h3>
@@ -860,4 +883,3 @@
     </script>
 </body>
 </html>
-
